@@ -112,13 +112,6 @@ func (g *Gateway) LoadConfig(filename string) {
 
 func main() {
 
-	go func() {
-		log.Println("Health check server listening on port 8081...")
-		if err := http.ListenAndServe(":8081", nil); err != nil {
-			log.Fatalf("Failed to start health check server: %v", err)
-		}
-	}()
-
 	g := NewGateway()
 
 	g.LoadConfig("config/config.yaml")
@@ -127,6 +120,13 @@ func main() {
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprintf(w, "OK")
 	})
+
+	go func() {
+		log.Println("Health check server listening on port 8081...")
+		if err := http.ListenAndServe(":8081", nil); err != nil {
+			log.Fatalf("Failed to start health check server: %v", err)
+		}
+	}()
 	
 	log.Println("API Gateway listening on port 8080...")
 
