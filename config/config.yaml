@@ -1,0 +1,9 @@
+routes:
+  - pattern: "/api/healthz"
+    method:
+      - "GET"
+    backend_dns: "http://127.0.0.1:8081"
+  - pattern: "/api/v1"
+    method:
+      - "GET"
+    backend_dns: "https://weather.danielbeltejar.es/v1/"

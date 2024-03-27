@@ -1,0 +1,8 @@
+###
+GET 127.0.0.1:8081/healthz
+
+###
+GET 127.0.0.1:8080/api/healthz
+
+###
+GET 127.0.0.1:8080/api/v1/forecast/today

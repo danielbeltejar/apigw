@@ -1,0 +1,5 @@
+routes:
+  - pattern: "/api/news"
+    method:
+      - "GET"
+    backend_dns: "http://news-api-service.pro-homepage-back.svc.cluster.local:8080"
