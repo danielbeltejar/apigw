@@ -48,16 +48,6 @@ pipeline {
     }
 
     stages {
-        stage('Checkout Source Code') {
-            steps {
-                container('kaniko') {
-                    checkout([$class: 'GitSCM',
-                              branches: [[name: 'main']],
-                              userRemoteConfigs: [[url: "${GIT_URL}"]]
-                    ])
-                }
-            }
-        }
         stage('Configure Environment') {
             steps {
                 container('kaniko') {
