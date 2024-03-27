@@ -111,10 +111,6 @@ func (g *Gateway) LoadConfig(filename string) {
 }
 
 func main() {
-	http.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(http.StatusOK)
-		fmt.Fprintf(w, "OK")
-	})
 
 	go func() {
 		log.Println("Health check server listening on port 8081...")
@@ -127,6 +123,11 @@ func main() {
 
 	g.LoadConfig("config/config.yaml")
 
+	http.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprintf(w, "OK")
+	})
+	
 	log.Println("API Gateway listening on port 8080...")
 
 	for _, route := range g.Routes {
