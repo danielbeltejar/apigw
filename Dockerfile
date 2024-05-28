@@ -5,8 +5,8 @@ FROM cgr.dev/chainguard/go AS builder
 
 #RUN apk add --no-cache gcc musl-dev
 
-COPY src/ /app
-COPY go.mod go.sum /app
+COPY src/ /app/
+COPY go.mod go.sum /app/
 
 WORKDIR /app
 
