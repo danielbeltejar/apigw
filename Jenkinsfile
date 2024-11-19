@@ -40,7 +40,7 @@ pipeline {
         GIT_URL = "${params.GIT_URL}"
         APP_NAME = "${params.APP_NAME}"
         
-        REGISTRY_URL = "core.harbor.domain"
+        REGISTRY_URL = "harbor.server.local"
         HELM_RELEASE_NAME = "${JOB_NAME.replaceAll("[^a-zA-Z0-9]", "-").toLowerCase()}"
         HELM_CHART_DIR = "k8s/"
         IMAGE_REPO = "${GIT_URL.tokenize("/")[-1].replaceAll(".git", "")}"
@@ -53,7 +53,7 @@ pipeline {
                 container('kaniko') {
                     script {
                         sh '''
-                        echo "10.101.105.93 ${REGISTRY_URL}" | tee -a /etc/hosts
+                        echo "192.168.1.105 ${REGISTRY_URL}" | tee -a /etc/hosts
                         '''
                     }
                 }
