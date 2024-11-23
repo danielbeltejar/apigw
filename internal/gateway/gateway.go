@@ -57,6 +57,7 @@ func (g *Gateway) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 			backendURL := *route.BackendAppURL
 			proxy := httputil.NewSingleHostReverseProxy(&backendURL)
+			g.Logger.Infof("Proxying request to backend URL: %s", backendURL.String())
 			proxy.ServeHTTP(w, r)
 			metrics.SuccessfulRequestsTotal.Inc()
 			return
