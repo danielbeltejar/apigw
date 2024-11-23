@@ -69,9 +69,6 @@ func (g *Gateway) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			backendURL := *route.BackendAppURL
 			backendURL.Path = trimmedPath
 
-			// Log the proxying action
-			g.Logger.Infof("Proxying request to backend URL: %s", backendURL.String())
-
 			// Proxy the request to the backend
 			proxy := httputil.NewSingleHostReverseProxy(&backendURL)
 			proxy.Director = func(req *http.Request) {
