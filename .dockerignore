@@ -1,0 +1,16 @@
+# Ignore Go's build output
+/app
+/bin
+/pkg
+*.log
+*.tmp
+*.swp
+*.swo
+
+.git
+.idea
+
+config.yaml
+test.http
+Dockerfile
+Jenkinsfile
