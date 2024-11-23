@@ -44,7 +44,7 @@ func (g *Gateway) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		// Check if the route pattern matches the request path
 		if strings.HasPrefix(r.URL.Path, route.Pattern) && (len(r.URL.Path) == len(route.Pattern) || r.URL.Path[len(route.Pattern)] == '/') {
 			// Trim the path to remove the pattern part before forwarding to the backend
-			trimmedPath := strings.TrimPrefix(r.URL.Path, route.Pattern)
+			trimmedPath := strings.TrimPrefix(r.URL.Path, "/api")
 			if trimmedPath == "" {
 				trimmedPath = "/" // Ensure that root path maps correctly
 			}
