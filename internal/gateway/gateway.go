@@ -41,7 +41,15 @@ func (g *Gateway) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	metrics.RequestsTotal.Inc()
 
 	for _, route := range g.Routes {
+		// Check if the route pattern matches the request path
 		if strings.HasPrefix(r.URL.Path, route.Pattern) && (len(r.URL.Path) == len(route.Pattern) || r.URL.Path[len(route.Pattern)] == '/') {
+			// Trim the path to remove the pattern part before forwarding to the backend
+			trimmedPath := strings.TrimPrefix(r.URL.Path, route.Pattern)
+			if trimmedPath == "" {
+				trimmedPath = "/" // Ensure that root path maps correctly
+			}
+
+			// Check if the request method is allowed
 			methodAllowed := false
 			for _, method := range route.AllowedMethods {
 				if r.Method == method {
@@ -55,15 +63,22 @@ func (g *Gateway) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 
+			// Set up the backend URL and trim the path
 			backendURL := *route.BackendAppURL
-			proxy := httputil.NewSingleHostReverseProxy(&backendURL)
+			backendURL.Path = trimmedPath
+
+			// Log the proxying action
 			g.Logger.Infof("Proxying request to backend URL: %s", backendURL.String())
+
+			// Proxy the request to the backend
+			proxy := httputil.NewSingleHostReverseProxy(&backendURL)
 			proxy.ServeHTTP(w, r)
 			metrics.SuccessfulRequestsTotal.Inc()
 			return
 		}
 	}
 
+	// Return a 404 if no route matched
 	http.NotFound(w, r)
 	metrics.NotFoundTotal.Inc()
 }
