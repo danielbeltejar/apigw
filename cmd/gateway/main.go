@@ -20,7 +20,7 @@ func main() {
 	gw := gateway.NewGateway(logger)
 	configFile := os.Getenv("CONFIG_PATH")
 	if configFile == "" {
-		configFile = "configs/config.yaml"
+		configFile = "config/config.yaml"
 	}
 	gw.LoadConfig(configFile)
 
