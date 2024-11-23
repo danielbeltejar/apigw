@@ -39,10 +39,9 @@ func NewGateway(logger *logrus.Logger) *Gateway {
 
 func (g *Gateway) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	metrics.RequestsTotal.Inc()
-	requestPath := r.URL.Path
 
 	for _, route := range g.Routes {
-		if strings.HasPrefix(requestPath, route.Pattern) {
+		if strings.HasPrefix(r.URL.Path, route.Pattern) && (len(r.URL.Path) == len(route.Pattern) || r.URL.Path[len(route.Pattern)] == '/') {
 			methodAllowed := false
 			for _, method := range route.AllowedMethods {
 				if r.Method == method {
