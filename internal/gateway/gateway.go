@@ -49,6 +49,8 @@ func (g *Gateway) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 				trimmedPath = "/" // Ensure that root path maps correctly
 			}
 
+			g.Logger.Infof("Request path '%s' trimmed to '%s'", r.URL.Path, trimmedPath)
+
 			// Check if the request method is allowed
 			methodAllowed := false
 			for _, method := range route.AllowedMethods {
