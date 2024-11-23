@@ -1,7 +1,5 @@
 # Ignore Go's build output
-/app
 /bin
-/pkg
 *.log
 *.tmp
 *.swp

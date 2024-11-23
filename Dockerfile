@@ -8,7 +8,7 @@ COPY ./ ./
 
 RUN go mod download
 
-RUN go build -o app ./cmd
+RUN go build -o app ./cmd/gateway
 
 # Deployment environment
 # ----------------------
